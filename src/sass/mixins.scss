@@ -1,0 +1,108 @@
+// ----------------
+//     MIXINS
+// ----------------
+
+// Opacity
+@mixin opacity($opacity) {
+	opacity: $opacity;
+	filter: alpha(opacity=$opacity*100);
+}
+
+// Border-radius
+@mixin border-radius($value: 10px) {
+	-webkit-border-radius: $value;
+	-moz-border-radius: $value;
+	border-radius: $value;
+}
+
+// Transitions
+@mixin transition($props: all, $speed: 0.2s, $easing: linear) {
+	-webkit-transition: $props $speed $easing;
+	-moz-transition: $props $speed $easing;
+	-o-transition: $props $speed $easing;
+	-ms-transition: $props $speed $easing;
+	transition: $props $speed $easing;
+}
+
+// @Font-face
+@mixin font-face($fontFamily, $fileName) {
+	@font-face {
+	   font-family: $fontFamily;
+	   src: url("../fonts/#{$fileName}.eot");
+	   src: url("../fonts/#{$fileName}.eot?#iefix") format("embedded-opentype"),
+	      url("../fonts/#{$fileName}.woff") format("woff"),
+	      url("../fonts/#{$fileName}.ttf") format("truetype");
+	   font-weight: normal;
+	   font-style: normal;
+	}
+}
+
+// display: inline-block;
+@mixin inline-block {
+   display: inline-block;
+   *display: inline;
+   zoom: 1;
+}
+
+// ::selection
+@mixin selection($color, $bgcolor, $elem: "") {
+	#{$elem}::-webkit-selection {
+		color: $color;
+		background-color: $bgcolor;
+	}
+
+	#{$elem}::-moz-selection {
+		color: $color;
+		background-color: $bgcolor;
+	}
+
+	#{$elem}::selection {
+		color: $color;
+		background-color: $bgcolor;
+	}
+}
+
+// clearfix
+@mixin clearfix {
+	&:before,
+	&:after {
+		content:" ";
+		display:table;
+	}
+
+	&:after {
+		clear:both;
+	}
+
+	& {
+		*zoom:1;
+	}
+}
+
+// text-shadow
+@mixin text-shadow {
+	text-shadow: 1px 1px 0 #000;
+}
+
+// noText
+@mixin no-text {
+	font-size: 0;
+	line-height: 0;
+	text-shadow: none;
+	color: transparent;
+}
+
+// placeholder
+@mixin placeholder {
+	::-webkit-input-placeholder {@content}
+	:-moz-placeholder           {@content}
+	::-moz-placeholder          {@content}
+	:-ms-input-placeholder      {@content}
+}
+
+// box-sizing
+@mixin box-sizing {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box
+}
