@@ -3,7 +3,7 @@ module.exports = function(grunt){
     grunt.registerTask("TEST", "To jest testowe zadanie",function() {
         grunt.log.ok("Zadanie wykonane!!!");
     });
-    
+
     grunt.initConfig({
 
         clean: {
@@ -21,7 +21,7 @@ module.exports = function(grunt){
                 options: {
                     eqeqeq: true,
                 },
-                src: ["src/js/**/*.js", "!src/js/scripts/*.js", "!src/js/script/*.js"]
+                src: ["src/js/**/*.js", "!src/js/scripts/*.js"]
             }
         },
 
@@ -50,7 +50,7 @@ module.exports = function(grunt){
         coffee: {
             dev: {
                 src: "src/coffee/app.coffee",
-                dest: "src/js/script/resultCoffee.js",
+                dest: "src/js/scripts/resultCoffee.js",
             }
         },
 
