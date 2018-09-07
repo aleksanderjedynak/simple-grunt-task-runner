@@ -28,6 +28,7 @@ module.exports = function(grunt){
         sass: {
             dev: {
                 options: {
+                    sourcemap: 'none',
                     style: 'expanded'
                 },
                 src: "src/sass/style.scss",
@@ -50,7 +51,7 @@ module.exports = function(grunt){
         coffee: {
             dev: {
                 src: "src/coffee/app.coffee",
-                dest: "src/js/scripts/resultCoffee.js",
+                dest: "dist/resultCoffee.js",
             }
         },
 
@@ -107,7 +108,18 @@ module.exports = function(grunt){
                     dest: 'dist/images/'
                 }],
             },
-        }
+        },
+
+        watch:{
+            options:{
+                livereload: true,
+            },
+            dev:{
+                /**wszystkie pliki */
+                files: ["src/**/*"],
+                tasks: ['dev'],
+            },
+        },
 
 
     });
@@ -125,6 +137,7 @@ module.exports = function(grunt){
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-htmlmin');
     grunt.loadNpmTasks('grunt-contrib-imagemin');
+    grunt.loadNpmTasks('grunt-contrib-watch');
 
     /***
      * TASK
@@ -149,8 +162,8 @@ module.exports = function(grunt){
     /***
      * registerTask
      * */
-    grunt.registerTask("dev", DEV);
-    grunt.registerTask("prod", PROD);
-    grunt.registerTask("default", "dev"); // => "dev"
+    grunt.registerTask("dev", DEV); //=> 'clean:dev','jshint','sass','autoprefixer','coffee',
+    grunt.registerTask("prod", PROD); //=> 'clean:prod','concat','uglify:prod','cssmin','htmlmin','imagemin',
+    grunt.registerTask("default", "watch"); // => "watch"
     grunt.registerTask("build", ["dev", "prod"]); // => "dev" and "prod"
 };
