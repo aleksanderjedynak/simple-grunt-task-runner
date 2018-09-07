@@ -74,6 +74,39 @@ module.exports = function(grunt){
                     mangle: false,
                 },
             }
+        },
+
+        cssmin: {
+            prod: {
+                files: {
+                    'dist/css/style.css': ['src/css/style.css'],
+                }
+            }
+        },
+
+        htmlmin: {
+            options:{
+                collapseWhitespace: true,
+            },
+            prod: {
+                files: {
+                    'dist/index.html': ['src/index.html'],
+                }
+            }
+        },
+
+        imagemin: {
+            options: {
+                optimizationLevel: 3,
+            },
+            prod:{
+                files: [{
+                    expand: true,
+                    cwd: 'src/images/',
+                    src: ['**/*.{png,jpg,gif}'],
+                    dest: 'dist/images/'
+                }],
+            },
         }
 
 
@@ -89,6 +122,9 @@ module.exports = function(grunt){
     grunt.loadNpmTasks('grunt-contrib-coffee');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-contrib-cssmin');
+    grunt.loadNpmTasks('grunt-contrib-htmlmin');
+    grunt.loadNpmTasks('grunt-contrib-imagemin');
 
     /***
      * TASK
@@ -105,6 +141,9 @@ module.exports = function(grunt){
         'clean:prod',
         'concat',
         'uglify:prod',
+        'cssmin',
+        'htmlmin',
+        'imagemin',
     ];
 
     /***
