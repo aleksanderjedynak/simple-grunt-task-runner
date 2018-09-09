@@ -11,7 +11,7 @@ module.exports = function(grunt){
                 src: ['src/css/*'],
             },
             prod: {
-                src: ['dist/*'],
+                src: ['dist/*', 'dist/**/*'],
             }
         },
 
@@ -80,7 +80,7 @@ module.exports = function(grunt){
         cssmin: {
             prod: {
                 files: {
-                    'dist/css/style.css': ['src/css/style.css'],
+                    'dist/css/style.min.css': ['src/css/style.css'],
                 }
             }
         },
@@ -91,7 +91,7 @@ module.exports = function(grunt){
             },
             prod: {
                 files: {
-                    'dist/index.html': ['src/index.html'],
+                    'dist/index.min.html': ['src/index.html'],
                 }
             }
         },
@@ -121,6 +121,15 @@ module.exports = function(grunt){
             },
         },
 
+        htmlcopy:{
+            src: "src/index.html",
+            dest: "dist/index.html",
+        },
+
+        csscopy:{
+            src: "src/css/style.css",
+            dest: "dist/css/style.css",
+        },
 
     });
 
@@ -138,6 +147,32 @@ module.exports = function(grunt){
     grunt.loadNpmTasks('grunt-contrib-htmlmin');
     grunt.loadNpmTasks('grunt-contrib-imagemin');
     grunt.loadNpmTasks('grunt-contrib-watch');
+
+    /**
+     * My registerTask
+     */
+
+    grunt.registerTask("htmlcopy", "Kopiuje pliki html", function () {
+        var src = grunt.config.get("htmlcopy.src");
+        var dest = grunt.config.get("htmlcopy.dest");
+
+        grunt.file.copy(src, dest);
+        grunt.log.ok("Plik html przekopiowano");
+        var msg = "Z " + src + " do " + dest;
+        grunt.log.write(msg);
+
+    });
+
+    grunt.registerTask("csscopy", "Kopiuje pliki css", function () {
+        var src = grunt.config.get("csscopy.src");
+        var dest = grunt.config.get("csscopy.dest");
+
+        grunt.file.copy(src, dest);
+        grunt.log.ok("Plik css przekopiowano");
+        var msg = "Z " + src + " do " + dest;
+        grunt.log.write(msg);
+
+    });
 
     /***
      * TASK
@@ -157,13 +192,16 @@ module.exports = function(grunt){
         'cssmin',
         'htmlmin',
         'imagemin',
+        'htmlcopy',
+        'csscopy',
     ];
+
 
     /***
      * registerTask
      * */
     grunt.registerTask("dev", DEV); //=> 'clean:dev','jshint','sass','autoprefixer','coffee',
-    grunt.registerTask("prod", PROD); //=> 'clean:prod','concat','uglify:prod','cssmin','htmlmin','imagemin',
+    grunt.registerTask("prod", PROD); //=> 'clean:prod','concat','uglify:prod','cssmin','htmlmin','imagemin', 'htmlcopy', 'csscopy',
     grunt.registerTask("default", "watch"); // => "watch"
     grunt.registerTask("build", ["dev", "prod"]); // => "dev" and "prod"
 };
