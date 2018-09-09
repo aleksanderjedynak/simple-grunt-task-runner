@@ -121,9 +121,16 @@ module.exports = function(grunt){
             },
         },
 
+        // htmlcopy:{
+        //     src: "src/index.html",
+        //     dest: "dist/index.html",
+        // },
+        /**multitask */
         htmlcopy:{
-            src: "src/index.html",
-            dest: "dist/index.html",
+            prod:{
+                src: "src/index.html",
+                dest: "dist/index.html",
+            }
         },
 
         csscopy:{
@@ -152,15 +159,51 @@ module.exports = function(grunt){
      * My registerTask
      */
 
-    grunt.registerTask("htmlcopy", "Kopiuje pliki html", function () {
-        var src = grunt.config.get("htmlcopy.src");
-        var dest = grunt.config.get("htmlcopy.dest");
+    // grunt.registerTask("htmlcopy", "Kopiuje pliki html", function () {
+    //     var src = grunt.config.get("htmlcopy.src");
+    //     var dest = grunt.config.get("htmlcopy.dest");
 
-        grunt.file.copy(src, dest);
-        grunt.log.ok("Plik html przekopiowano");
-        var msg = "Z " + src + " do " + dest;
-        grunt.log.write(msg);
+    //     grunt.file.copy(src, dest);
+    //     grunt.log.ok("Plik html przekopiowano");
+    //     var msg = "Z " + src + " do " + dest;
+    //     grunt.log.write(msg);
 
+    // });
+
+    grunt.registerMultiTask("htmlcopy", "Kopiuje pliki html", function () {
+        // console.log(this);
+
+        /**1 */
+        // var src = this.data.src;
+        // var dest = this.data.dest;
+        // grunt.file.copy(src, dest);
+        // grunt.log.ok("Plik htnl przekopiowano");
+        // var msg = "Z " + src + " do " + dest;
+        // grunt.log.write(msg);
+        
+        /** 2 */
+        this.files.forEach(function (obj) {
+
+            var src = null;
+            var dest = null;
+
+            for( var key in obj ){
+                if (key === 'src'){
+                    src = obj[key];
+                    if (typeof src === 'object'){
+                        for( var i in src ){
+                            src = src[i]
+                        }
+                    } 
+                } else if(key === 'dest'){
+                    dest = obj[key];
+                }
+            };
+            grunt.file.copy(src, dest);
+            grunt.log.ok("Plik htnl przekopiowano");
+            var msg = "Z " + src + " do " + dest;
+            grunt.log.write(msg);
+        });
     });
 
     grunt.registerTask("csscopy", "Kopiuje pliki css", function () {
