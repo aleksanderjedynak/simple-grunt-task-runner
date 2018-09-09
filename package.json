@@ -20,9 +20,11 @@
     "grunt-contrib-jshint": "^1.1.0",
     "grunt-contrib-sass": "^1.0.0",
     "grunt-contrib-uglify": "^4.0.0",
-    "grunt-contrib-watch": "^1.1.0"
+    "grunt-contrib-watch": "^1.1.0",
+    "grunt-targethtml": "^0.2.6"
   },
   "dependencies": {
-    "grunt": "^1.0.3"
+    "grunt": "^1.0.3",
+    "npm": "^6.4.1"
   }
 }

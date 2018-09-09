@@ -125,6 +125,7 @@ module.exports = function(grunt){
         //     src: "src/index.html",
         //     dest: "dist/index.html",
         // },
+
         /**multitask */
         htmlcopy:{
             prod:{
@@ -136,6 +137,19 @@ module.exports = function(grunt){
         csscopy:{
             src: "src/css/style.css",
             dest: "dist/css/style.css",
+        },
+
+        targethtml:{
+            prod: {
+                files: {
+                    'dist/index.html': 'src/index.html'
+                }
+            },
+            dev: {
+                files: {
+                    'dist/index.html': 'src/index.html'
+                }
+            }
         },
 
     });
@@ -154,6 +168,7 @@ module.exports = function(grunt){
     grunt.loadNpmTasks('grunt-contrib-htmlmin');
     grunt.loadNpmTasks('grunt-contrib-imagemin');
     grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-targethtml');
 
     /**
      * My registerTask
@@ -180,7 +195,7 @@ module.exports = function(grunt){
         // grunt.log.ok("Plik htnl przekopiowano");
         // var msg = "Z " + src + " do " + dest;
         // grunt.log.write(msg);
-        
+
         /** 2 */
         this.files.forEach(function (obj) {
 
@@ -226,6 +241,7 @@ module.exports = function(grunt){
         'sass',
         'autoprefixer',
         'coffee',
+        'targethtml:dev',
     ];
 
     var PROD = [
@@ -237,14 +253,15 @@ module.exports = function(grunt){
         'imagemin',
         'htmlcopy',
         'csscopy',
+        'targethtml:prod',
     ];
 
 
     /***
      * registerTask
      * */
-    grunt.registerTask("dev", DEV); //=> 'clean:dev','jshint','sass','autoprefixer','coffee',
-    grunt.registerTask("prod", PROD); //=> 'clean:prod','concat','uglify:prod','cssmin','htmlmin','imagemin', 'htmlcopy', 'csscopy',
+    grunt.registerTask("dev", DEV); //=> 'clean:dev','jshint','sass','autoprefixer','coffee', 'targethtml:dev',
+    grunt.registerTask("prod", PROD); //=> 'clean:prod','concat','uglify:prod','cssmin','htmlmin','imagemin', 'htmlcopy', 'csscopy', 'targethtml:prod',
     grunt.registerTask("default", "watch"); // => "watch"
     grunt.registerTask("build", ["dev", "prod"]); // => "dev" and "prod"
 };
