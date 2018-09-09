@@ -6,6 +6,8 @@ module.exports = function(grunt){
 
     grunt.initConfig({
 
+        pkg: grunt.file.readJSON("package.json"),
+
         clean: {
             dev: {
                 src: ['src/css/*'],
@@ -67,6 +69,10 @@ module.exports = function(grunt){
         },
 
         uglify: {
+            options:{
+                // banner: "/* To jest kod wygenerowany z simple-grunt-task-runner */\n",
+                banner: "/* <%= pkg.name %> - <%= pkg.version %> - <%= grunt.template.today('dd-mm-yyyy') %> by <%= pkg.author %>*/\n",
+            },
             prod: {
                 files: {
                     'dist/built.min.js': 'dist/built.js',
